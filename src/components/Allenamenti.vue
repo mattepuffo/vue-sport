@@ -32,7 +32,11 @@
 
             <Column field="title" header="Allenamento" :sortable="true"></Column>
             <Column field="data" header="Data" :sortable="true"></Column>
-            <Column field="finito" header="Finito" :sortable="true"></Column>
+            <Column field="finito" header="Finito" :sortable="true">
+              <template #body="allProps">
+                <span>{{ (allProps.data.finito == 1) ? 'SI' : 'NO' }}</span>
+              </template>
+            </Column>
             <Column header="Note">
               <template #body="allProps">
                 <span v-html="allProps.data.note"></span>

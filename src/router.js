@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
 import Dashboard from './components/Dashboard.vue';
 import Allenamenti from "@/components/Allenamenti";
+import AggiungiAllenamento from "@/components/AggiungiAllenamento";
 
 const routes = [
     {
@@ -12,6 +13,11 @@ const routes = [
         path: '/allenamenti',
         name: 'allenamenti',
         component: Allenamenti,
+    },
+    {
+        path: '/aggiungi',
+        name: 'aggiungi',
+        component: AggiungiAllenamento,
     },
     {
         path: '/formlayout',

@@ -40,7 +40,10 @@ export default {
               label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'
             },
             {
-              label: 'Allenamenti', icon: 'pi pi-fw pi-home', to: '/allenamenti'
+              label: 'Allenamenti', icon: 'pi pi-fw pi-list', to: '/allenamenti'
+            },
+            {
+              label: 'Aggiungi', icon: 'pi pi-fw pi-plus', to: '/aggiungi'
             }
           ]
         },

@@ -1,5 +1,5 @@
 import '../../vue.config';
-import {remotePath} from "../../vue.config";
+import {remotePath} from "../../global";
 
 export default class AllenamentiService {
 

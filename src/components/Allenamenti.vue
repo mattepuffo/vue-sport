@@ -69,7 +69,6 @@ export default {
     }
   },
   created() {
-    console.clear();
     this.allService = new AllenamentiService();
   },
   mounted() {

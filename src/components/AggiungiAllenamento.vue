@@ -1,40 +1,93 @@
 <template>
-  <div class="grid">
+  <form @submit.prevent="onSubmit">
 
-    <div class="col-12">
-      <div class="card p-fluid">
-        <h5>{{ title }}</h5>
-        <div class="field">
-          <label for="allenamento">Allenamto</label>
-          <Dropdown id="allenamento" v-model="dropdownItem" :options="dropdownItems" optionLabel="name"
-                    placeholder="Seleziona un allenamento"></Dropdown>
+    <div class="grid">
+
+      <div class="col-12">
+        <div class="card p-fluid">
+          <h5>{{ title }}</h5>
+
+          <div class="field">
+            <label for="allenamento">Allenamento</label>
+            <Dropdown id="allenamento" v-model="selctedAllenamento" :options="allenamenti"
+                      optionLabel="label" optionValue="value" :filter="true" :showClear="true"
+                      placeholder="Seleziona un allenamento"></Dropdown>
+          </div>
+
+          <div class="field">
+            <label for="data">Data</label>
+            <Calendar id="data" v-model="selectedData" :showButtonBar="true" :touchUI="true" :showIcon="true"
+                      dateFormat="dd/mm/yy"/>
+          </div>
+
+          <div class="field">
+            <label for="note">Note</label>
+            <Editor id="note" v-model="selectedNote" editorStyle="height: 320px"/>
+          </div>
         </div>
+
         <div class="field">
-          <label for="email1">Email</label>
-          <InputText id="email1" type="text"/>
+          <label for="finito">Finito</label>
+          <br>
+          <InputSwitch id="finito" v-model="selectedFinito"/>
         </div>
+
         <div class="field">
-          <label for="age1">Age</label>
-          <InputText id="age1" type="text"/>
+          <Button type="button" label="Search" icon="pi pi-save" :loading="loading[0]" @click="load(0)"/>
         </div>
+
       </div>
 
     </div>
 
-  </div>
+  </form>
 </template>
 
 <script>
+import AllenamentiService from '../service/AllenamentiService';
+import useVuelidate from '@vuelidate/core';
+import {required} from '@vuelidate/validators';
+
+// https://vuelidate-next.netlify.app/guide.html
+
 export default {
+  name: 'Aggiungi allenamento',
+  allService: null,
+  setup() {
+    return {v$: useVuelidate()}
+  },
   data() {
     return {
       title: "Aggiungi allenamento",
-      dropdownItems: [
-        {name: 'Option 1', code: 'Option 1'},
-        {name: 'Option 2', code: 'Option 2'},
-        {name: 'Option 3', code: 'Option 3'}
-      ],
-      dropdownItem: null
+      allenamenti: null,
+      selctedAllenamento: null,
+      selectedData: null,
+      selectedNote: null,
+      selectedFinito: true,
+      loading: [false, false, false]
+    }
+  },
+  validations() {
+    return {
+      form: {
+        selctedAllenamento: {
+          required
+        }
+      }
+    }
+  },
+  created() {
+    this.allService = new AllenamentiService();
+  },
+  mounted() {
+    this.allService.getTipi().then(data => {
+      this.allenamenti = data;
+    });
+  },
+  methods: {
+    load(index) {
+      this.loading[index] = true;
+      setTimeout(() => this.loading[index] = false, 1000);
     }
   }
 }

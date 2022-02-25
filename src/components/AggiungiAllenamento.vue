@@ -1,46 +1,46 @@
 <template>
-  <form @submit.prevent="onSubmit">
 
-    <div class="grid">
+  <div class="grid">
 
-      <div class="col-12">
-        <div class="card p-fluid">
-          <h5>{{ title }}</h5>
+    <div class="col-12">
+      <div class="card p-fluid">
+        <h5>{{ title }}</h5>
 
-          <div class="field">
-            <label for="allenamento">Allenamento</label>
-            <Dropdown id="allenamento" v-model="selctedAllenamento" :options="allenamenti"
-                      optionLabel="label" optionValue="value" :filter="true" :showClear="true"
-                      placeholder="Seleziona un allenamento"></Dropdown>
-          </div>
-
-          <div class="field">
-            <label for="data">Data</label>
-            <Calendar id="data" v-model="selectedData" :showButtonBar="true" :touchUI="true" :showIcon="true"
-                      dateFormat="dd/mm/yy"/>
-          </div>
-
-          <div class="field">
-            <label for="note">Note</label>
-            <Editor id="note" v-model="selectedNote" editorStyle="height: 320px"/>
-          </div>
+        <div class="field">
+          <label for="allenamento">Allenamento</label>
+          <Dropdown id="allenamento" v-model="selctedAllenamento" :options="allenamenti"
+                    optionLabel="label" optionValue="value" :filter="true" :showClear="true"
+                    placeholder="Seleziona un allenamento"></Dropdown>
         </div>
 
         <div class="field">
-          <label for="finito">Finito</label>
-          <br>
-          <InputSwitch id="finito" v-model="selectedFinito"/>
+          <label for="data">Data</label>
+          <Calendar id="data" v-model="selectedData" :showButtonBar="true" :touchUI="true" :showIcon="true"
+                    dateFormat="dd/mm/yy"/>
         </div>
 
         <div class="field">
-          <Button type="button" label="Search" icon="pi pi-save" :loading="loading[0]" @click="load(0)"/>
+          <label for="note">Note</label>
+          <Editor id="note" v-model="selectedNote" editorStyle="height: 320px"/>
         </div>
+      </div>
 
+      <div class="field">
+        <label for="finito">Finito</label>
+        <br>
+        <InputSwitch id="finito" v-model="selectedFinito"/>
+      </div>
+
+      <div class="field">
+        <Button type="button" label="Search" icon="pi pi-save" :loading="loading[0]" @click="submit()"/>
       </div>
 
     </div>
 
-  </form>
+  </div>
+
+  <Toast position="top-center"/>
+
 </template>
 
 <script>
@@ -69,11 +69,9 @@ export default {
   },
   validations() {
     return {
-      form: {
-        selctedAllenamento: {
-          required
-        }
-      }
+      selctedAllenamento: {required},
+      selectedData: {required},
+      selectedNote: {required}
     }
   },
   created() {
@@ -85,9 +83,20 @@ export default {
     });
   },
   methods: {
-    load(index) {
-      this.loading[index] = true;
-      setTimeout(() => this.loading[index] = false, 1000);
+    async submit() {
+      const result = await this.v$.$validate()
+      if (!result) {
+        this.$toast.add({
+          severity: 'error',
+          summary: 'Allenamento, data e note sono obbligatori!',
+          life: 3000
+        });
+      } else {
+        console.log(this.selctedAllenamento);
+        console.log(this.selectedData);
+        console.log(this.selectedNote);
+        console.log(this.selectedFinito);
+      }
     }
   }
 }

@@ -93,9 +93,10 @@ export default {
           life: 3000
         });
       } else {
+        const dd = new Date(this.selectedData);
         const data = {
           'allenamento': this.selctedAllenamento,
-          'data': this.selectedData,
+          'data': dd.getFullYear() + '-' + (dd.getMonth() + 1) + '-' + dd.getDate(),
           'note': this.selectedNote,
           'finito': this.selectedFinito
         };

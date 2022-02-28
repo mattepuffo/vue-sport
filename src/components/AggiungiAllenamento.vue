@@ -64,6 +64,7 @@ export default {
       selectedData: null,
       selectedNote: null,
       selectedFinito: true,
+      allService: null,
       loading: [false, false, false]
     }
   },
@@ -92,10 +93,27 @@ export default {
           life: 3000
         });
       } else {
-        console.log(this.selctedAllenamento);
-        console.log(this.selectedData);
-        console.log(this.selectedNote);
-        console.log(this.selectedFinito);
+        const data = {
+          'allenamento': this.selctedAllenamento,
+          'data': this.selectedData,
+          'note': this.selectedNote,
+          'finito': this.selectedFinito
+        };
+
+        // console.log(data);
+
+        this.allService.addAllenamento(data)
+            .then(res => {
+              if (res.res === 'ok') {
+                location.href = '/';
+              } else {
+                this.$toast.add({
+                  severity: 'error',
+                  summary: res.message,
+                  life: 3000
+                });
+              }
+            });
       }
     }
   }

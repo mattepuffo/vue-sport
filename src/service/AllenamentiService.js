@@ -15,6 +15,20 @@ export default class AllenamentiService {
             .then(d => d.allenamenti_tipi);
     }
 
+    addAllenamento(data) {
+        return fetch(remotePath + 'allenamenti/add.php', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((res) => {
+            return res.json();
+        }, (error) => {
+            return error;
+        });
+    }
+
     // getMesiAnno() {
     //     return axios.get(getMesiAnno/*, {responseType: 'text'}*/)
     //         .then(res => {
@@ -36,17 +50,6 @@ export default class AllenamentiService {
     //         });
     // }
     //
-    // addAllenamento(postData) {
-    //     return axios.post(addAllenamento, postData, {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then((resp) => {
-    //         return resp.data;
-    //     }, (error) => {
-    //         return error;
-    //     });
-    // }
     //
     // editAllenamento(postData) {
     //     return axios.post(editAllenamento, postData, {

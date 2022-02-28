@@ -31,15 +31,26 @@
             </template>
 
             <Column field="title" header="Allenamento" :sortable="true"></Column>
+
             <Column field="data" header="Data" :sortable="true"></Column>
+
             <Column field="finito" header="Finito" :sortable="true">
               <template #body="allProps">
                 <span>{{ (allProps.data.finito == 1) ? 'SI' : 'NO' }}</span>
               </template>
             </Column>
+
             <Column header="Note">
               <template #body="allProps">
                 <span v-html="allProps.data.note"></span>
+              </template>
+            </Column>
+
+            <Column header="">
+              <template #body="allProps">
+                <router-link :to="{ name: 'aggiungi', params: { id: allProps.data.id }}">
+                  <Button icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"/>
+                </router-link>
               </template>
             </Column>
 

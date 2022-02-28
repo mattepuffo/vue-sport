@@ -15,7 +15,7 @@ const routes = [
         component: Allenamenti,
     },
     {
-        path: '/aggiungi',
+        path: '/aggiungi/:id?',
         name: 'aggiungi',
         component: AggiungiAllenamento,
     },

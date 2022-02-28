@@ -47,12 +47,14 @@
 import AllenamentiService from '../service/AllenamentiService';
 import useVuelidate from '@vuelidate/core';
 import {required} from '@vuelidate/validators';
+import voca from 'voca';
 
 // https://vuelidate-next.netlify.app/guide.html
 
 export default {
   name: 'Aggiungi allenamento',
   allService: null,
+  allId: null,
   setup() {
     return {v$: useVuelidate()}
   },
@@ -76,6 +78,11 @@ export default {
     }
   },
   created() {
+    this.allId = this.$route.params.id;
+    if (voca.isEmpty(this.allId)) {
+      // DO REQUEST
+    }
+
     this.allService = new AllenamentiService();
   },
   mounted() {

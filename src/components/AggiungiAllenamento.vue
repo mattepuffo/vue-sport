@@ -32,7 +32,7 @@
       </div>
 
       <div class="field">
-        <Button type="button" label="Search" icon="pi pi-save" :loading="loading[0]" @click="submit()"/>
+        <Button type="button" label="Search" icon="pi pi-save" @click="submit()"/>
       </div>
 
     </div>
@@ -66,8 +66,7 @@ export default {
       selectedData: null,
       selectedNote: null,
       selectedFinito: true,
-      allService: null,
-      loading: [false, false, false]
+      allService: null
     }
   },
   validations() {

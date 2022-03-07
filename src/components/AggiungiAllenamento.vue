@@ -77,12 +77,20 @@ export default {
     }
   },
   created() {
-    this.allId = this.$route.params.id;
-    if (voca.isEmpty(this.allId)) {
-      // DO REQUEST
-    }
-
     this.allService = new AllenamentiService();
+
+    this.allId = this.$route.params.id;
+    if (!voca.isEmpty(this.allId)) {
+      this.allService.getById(this.allId).then(data => {
+        const as = data[0];
+        console.log(as);
+
+        this.selctedAllenamento = as.a_id;
+        this.selectedData = as.start;
+        this.selectedNote = as.note;
+        this.selectedFinito = (as.finito == 1) ? true : false;
+      });
+    }
   },
   mounted() {
     this.allService.getTipi().then(data => {
@@ -100,27 +108,45 @@ export default {
         });
       } else {
         const dd = new Date(this.selectedData);
-        const data = {
+        let data = {
           'allenamento': this.selctedAllenamento,
           'data': dd.getFullYear() + '-' + (dd.getMonth() + 1) + '-' + dd.getDate(),
           'note': this.selectedNote,
           'finito': this.selectedFinito
         };
 
+        if (voca.isEmpty(this.allId)) {
+          this.allService.addAllenamento(data)
+              .then(res => {
+                if (res.res === 'ok') {
+                  location.href = '/';
+                } else {
+                  this.$toast.add({
+                    severity: 'error',
+                    summary: res.message,
+                    life: 3000
+                  });
+                }
+              });
+        } else {
+          data.id = this.allId;
+
+          this.allService.upAllenamento(data)
+              .then(res => {
+                if (res.res === 'ok') {
+                  location.href = '/';
+                } else {
+                  this.$toast.add({
+                    severity: 'error',
+                    summary: res.message,
+                    life: 3000
+                  });
+                }
+              });
+        }
+
         // console.log(data);
 
-        this.allService.addAllenamento(data)
-            .then(res => {
-              if (res.res === 'ok') {
-                location.href = '/';
-              } else {
-                this.$toast.add({
-                  severity: 'error',
-                  summary: res.message,
-                  life: 3000
-                });
-              }
-            });
       }
     }
   }

@@ -51,6 +51,10 @@
                 <router-link :to="{ name: 'aggiungi', params: { id: allProps.data.id }}">
                   <Button icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"/>
                 </router-link>
+
+                <Button icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2"
+                        @click="del(allProps.data.id)"/>
+
               </template>
             </Column>
 
@@ -60,6 +64,9 @@
       </div>
     </div>
   </div>
+
+  <ConfirmDialog></ConfirmDialog>
+
 </template>
 
 <script>
@@ -83,12 +90,15 @@ export default {
     this.allService = new AllenamentiService();
   },
   mounted() {
-    this.allService.getAll().then(data => {
-      this.allenamenti = data;
-      this.loading1 = false;
-    });
+    this.getAllenamenti()
   },
   methods: {
+    getAllenamenti() {
+      this.allService.getAll().then(data => {
+        this.allenamenti = data;
+        this.loading1 = false;
+      });
+    },
     clearFilter1() {
       this.initFilters1();
     },
@@ -96,6 +106,26 @@ export default {
       this.filters1 = {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
       }
+    },
+    del(id) {
+      this.$confirm.require({
+        message: 'Sei sicuro di voler cancellare questo allenamento?',
+        header: 'Conferma cancellazione',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'SI',
+        accept: () => {
+          const data = {
+            id
+          };
+
+          this.allService.delAllenamento(data).then(() => {
+            this.getAllenamenti();
+          });
+        },
+        reject: () => {
+          this.$confirm.close();
+        }
+      });
     }
   }
 }

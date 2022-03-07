@@ -9,6 +9,12 @@ export default class AllenamentiService {
             .then(d => d.allenamenti);
     }
 
+    getById(id) {
+        return fetch(remotePath + 'allenamenti/get.php?id=' + id)
+            .then(res => res.json())
+            .then(d => d.allenamenti);
+    }
+
     getTipi() {
         return fetch(remotePath + 'allenamenti_tipi/get.php')
             .then(res => res.json())
@@ -17,6 +23,34 @@ export default class AllenamentiService {
 
     addAllenamento(data) {
         return fetch(remotePath + 'allenamenti/add.php', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((res) => {
+            return res.json();
+        }, (error) => {
+            return error;
+        });
+    }
+
+    upAllenamento(data) {
+        return fetch(remotePath + 'allenamenti/up.php', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((res) => {
+            return res.json();
+        }, (error) => {
+            return error;
+        });
+    }
+
+    delAllenamento(data) {
+        return fetch(remotePath + 'allenamenti/del.php', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,31 +82,6 @@ export default class AllenamentiService {
     //         .then(res => {
     //             return res.data.allenamenti_tipi;
     //         });
-    // }
-    //
-    //
-    // editAllenamento(postData) {
-    //     return axios.post(editAllenamento, postData, {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then((resp) => {
-    //         return resp.data;
-    //     }, (error) => {
-    //         return error;
-    //     });
-    // }
-    //
-    // deleteAllenamento(postData) {
-    //     return axios.post(deleteAllenamento, postData, {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then((resp) => {
-    //         return resp.data;
-    //     }, (error) => {
-    //         return error;
-    //     });
     // }
 
     // getAll: 'https://www.mattepuffo.com/api/sport/allenamenti/get.php',

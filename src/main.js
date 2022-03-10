@@ -93,6 +93,7 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import Editor from 'primevue/editor';
+import FullCalendar from '@fullcalendar/vue3';
 
 import CodeHighlight from './AppCodeHighlight';
 import BlockViewer from './BlockViewer';
@@ -196,5 +197,6 @@ app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('BlockViewer', BlockViewer);
 app.component('Editor', Editor);
+app.component('FullCalendar', FullCalendar);
 
 app.mount('#app');

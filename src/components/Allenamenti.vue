@@ -74,11 +74,10 @@ import AllenamentiService from "@/service/AllenamentiService";
 import {FilterMatchMode} from "primevue/api";
 
 export default {
-  name: "Allenamenti",
-  allService: null,
   data() {
     return {
       title: "Allenamenti",
+      allService: null,
       allenamenti: null,
       filters1: {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
@@ -90,7 +89,7 @@ export default {
     this.allService = new AllenamentiService();
   },
   mounted() {
-    this.getAllenamenti()
+    this.getAllenamenti();
   },
   methods: {
     getAllenamenti() {

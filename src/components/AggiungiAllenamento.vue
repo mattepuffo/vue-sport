@@ -49,17 +49,13 @@ import useVuelidate from '@vuelidate/core';
 import {required} from '@vuelidate/validators';
 import voca from 'voca';
 
-// https://vuelidate-next.netlify.app/guide.html
-
 export default {
-  name: 'Aggiungi allenamento',
-  allService: null,
-  allId: null,
   setup() {
     return {v$: useVuelidate()}
   },
   data() {
     return {
+      allId: null,
       title: "Aggiungi allenamento",
       allenamenti: null,
       selctedAllenamento: null,
@@ -83,7 +79,6 @@ export default {
     if (!voca.isEmpty(this.allId)) {
       this.allService.getById(this.allId).then(data => {
         const as = data[0];
-        console.log(as);
 
         this.selctedAllenamento = as.a_id;
         this.selectedData = as.start;

@@ -10,7 +10,7 @@
           </div>
           <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
                style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-map-marker text-orange-500 text-xl"></i>
+            <i class="pi pi-globe text-orange-500 text-xl"></i>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
           </div>
           <div class="flex align-items-center justify-content-center bg-blue-100 border-round"
                style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-shopping-cart text-blue-500 text-xl"></i>
+            <i class="pi pi-star-fill text-blue-500 text-xl"></i>
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@
           </div>
           <div class="flex align-items-center justify-content-center bg-cyan-100 border-round"
                style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-inbox text-cyan-500 text-xl"></i>
+            <i class="pi pi-star text-cyan-500 text-xl"></i>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
           </div>
           <div class="flex align-items-center justify-content-center bg-purple-100 border-round"
                style="width:2.5rem;height:2.5rem">
-            <i class="pi pi-comment text-purple-500 text-xl"></i>
+            <i class="pi pi-ban text-purple-500 text-xl"></i>
           </div>
         </div>
       </div>
@@ -78,6 +78,7 @@ import '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import router from "@/router";
 
 export default {
   data() {
@@ -90,7 +91,6 @@ export default {
       cntCurr: null,
       cntPrev: null,
       cntPrev2: null,
-      products: null,
       totQta: null,
       options: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -100,12 +100,13 @@ export default {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        editable: true,
+        eventClick: this.handleDateClick,
+        editable: false,
         selectable: true,
         selectMirror: true,
-        dayMaxEvents: true
+        dayMaxEvents: true,
+        events: null
       },
-      events: null
     }
   },
   created() {
@@ -117,17 +118,19 @@ export default {
     this.getSum();
   },
   methods: {
+    handleDateClick: function (info) {
+      console.log(info.event.id);
+      router.push({name: 'aggiungi', params: {id: info.event.id}})
+      // location.href = '/aggiungi/' + info.event.id;
+    },
     getAllenamenti() {
       this.allService.getAll().then(data => {
-        // console.log(data);
-        this.events = data;
+        this.options.events = data;
         this.totQta = data.length;
       });
     },
     getSum() {
       this.allService.sumAnno().then(data => {
-        // console.log(data);
-
         const current = data.slice(-1);
         const prev = data.slice(-2, -1);
         const prev2 = data.slice(-3, -2);

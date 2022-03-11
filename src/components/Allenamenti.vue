@@ -22,6 +22,7 @@
               </div>
             </template>
 
+            <!--
             <template #empty>
               Nessun allenamento
             </template>
@@ -29,6 +30,7 @@
             <template #loading>
               Loading...
             </template>
+            -->
 
             <Column field="title" header="Allenamento" :sortable="true"></Column>
 
@@ -82,7 +84,7 @@ export default {
       filters1: {
         'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
       },
-      loading1: true
+      // loading1: true
     }
   },
   created() {
@@ -95,7 +97,7 @@ export default {
     getAllenamenti() {
       this.allService.getAll().then(data => {
         this.allenamenti = data;
-        this.loading1 = false;
+        // this.loading1 = false;
       });
     },
     clearFilter1() {

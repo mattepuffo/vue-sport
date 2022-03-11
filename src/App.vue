@@ -37,13 +37,13 @@ export default {
           label: 'Home',
           items: [
             {
-              label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'
+              label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/sport'
             },
             {
-              label: 'Allenamenti', icon: 'pi pi-fw pi-list', to: '/allenamenti'
+              label: 'Allenamenti', icon: 'pi pi-fw pi-list', to: '/sport/allenamenti'
             },
             {
-              label: 'Aggiungi', icon: 'pi pi-fw pi-plus', to: '/aggiungi'
+              label: 'Aggiungi', icon: 'pi pi-fw pi-plus', to: '/sport/aggiungi'
             }
           ]
         }

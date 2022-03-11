@@ -50,6 +50,9 @@
 
             <Column header="">
               <template #body="allProps">
+                <Button icon="pi pi-copy" class="p-button-rounded p-button-info mr-2"
+                        @click="copiaNote(allProps.data.note)"/>
+
                 <router-link :to="{ name: 'aggiungi', params: { id: allProps.data.id }}">
                   <Button icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"/>
                 </router-link>
@@ -74,6 +77,7 @@
 <script>
 import AllenamentiService from "@/service/AllenamentiService";
 import {FilterMatchMode} from "primevue/api";
+import {copyText} from 'vue3-clipboard';
 
 export default {
   data() {
@@ -94,6 +98,14 @@ export default {
     this.getAllenamenti();
   },
   methods: {
+    copiaNote(note) {
+      const strippedString = note.replace(/(<([^>]+)>)/gi, "");
+      copyText(strippedString, undefined, (error) => {
+        if (error) {
+          alert(error);
+        }
+      })
+    },
     getAllenamenti() {
       this.allService.getAll().then(data => {
         this.allenamenti = data;

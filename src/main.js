@@ -94,6 +94,7 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import Editor from 'primevue/editor';
 import FullCalendar from '@fullcalendar/vue3';
+import VueClipboard from 'vue3-clipboard';
 
 import CodeHighlight from './AppCodeHighlight';
 import BlockViewer from './BlockViewer';
@@ -111,6 +112,10 @@ app.use(PrimeVue, {ripple: true, inputStyle: 'outlined'});
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(router);
+app.use(VueClipboard, {
+    autoSetContainer: true,
+    appendToBody: true,
+});
 
 app.directive('tooltip', Tooltip);
 app.directive('ripple', Ripple);

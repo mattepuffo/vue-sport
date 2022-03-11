@@ -32,7 +32,7 @@
       </div>
 
       <div class="field">
-        <Button type="button" label="Search" icon="pi pi-save" @click="submit()"/>
+        <Button type="button" label="Salva" icon="pi pi-save" @click="submit()"/>
       </div>
 
     </div>
@@ -114,7 +114,7 @@ export default {
           this.allService.addAllenamento(data)
               .then(res => {
                 if (res.res === 'ok') {
-                  location.href = '/';
+                  location.href = '/sport';
                 } else {
                   this.$toast.add({
                     severity: 'error',
@@ -129,7 +129,7 @@ export default {
           this.allService.upAllenamento(data)
               .then(res => {
                 if (res.res === 'ok') {
-                  location.href = '/';
+                  location.href = '/sport';
                 } else {
                   this.$toast.add({
                     severity: 'error',

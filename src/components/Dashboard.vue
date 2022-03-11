@@ -119,8 +119,8 @@ export default {
   },
   methods: {
     handleDateClick: function (info) {
-      console.log(info.event.id);
-      router.push({name: 'aggiungi', params: {id: info.event.id}})
+      // console.log(info.event.id);
+      router.push({name: '/aggiungi', params: {id: info.event.id}})
       // location.href = '/aggiungi/' + info.event.id;
     },
     getAllenamenti() {

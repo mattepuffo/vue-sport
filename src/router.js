@@ -5,24 +5,23 @@ import AggiungiAllenamento from "@/components/AggiungiAllenamento";
 
 const routes = [
     {
-        path: '/sport',
+        path: '/',
         name: 'dashboard',
         component: Dashboard,
     },
     {
-        path: '/sport/allenamenti',
+        path: '/allenamenti',
         name: 'allenamenti',
         component: Allenamenti,
     },
     {
-        path: '/sport/aggiungi/:id?',
+        path: '/aggiungi/:id?',
         name: 'aggiungi',
         component: AggiungiAllenamento,
     }
 ];
 
 const router = createRouter({
-    // history: createWebHashHistory(),
     history: createWebHistory(),
     routes
 });

@@ -15,7 +15,7 @@ const routes = [
         component: Allenamenti,
     },
     {
-        path: '/aggiungi/:id?',
+        path: '/aggiungi/:id?/:dup?',
         name: 'aggiungi',
         component: AggiungiAllenamento,
     }

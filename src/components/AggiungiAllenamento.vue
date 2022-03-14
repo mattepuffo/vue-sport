@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       allId: null,
+      dup: null,
       title: "Aggiungi allenamento",
       allenamenti: null,
       selctedAllenamento: null,
@@ -76,15 +77,24 @@ export default {
     this.allService = new AllenamentiService();
 
     this.allId = this.$route.params.id;
+    this.dup = this.$route.params.dup;
+
     if (!voca.isEmpty(this.allId)) {
       this.allService.getById(this.allId).then(data => {
         const as = data[0];
 
         this.selctedAllenamento = as.a_id;
-        this.selectedData = as.start;
+        if (voca.isEmpty(this.dup)) {
+          this.selectedData = as.start;
+        }
         this.selectedNote = as.note;
         this.selectedFinito = (as.finito == 1) ? true : false;
       });
+    }
+
+    if (!voca.isEmpty(this.dup)) {
+      this.allId = '';
+      console.log(this.allId);
     }
   },
   mounted() {

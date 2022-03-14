@@ -63,7 +63,7 @@
 
     <div class="col-12">
       <div class="card mb-0 mt-5">
-        <FullCalendar :events="events" :options="options"/>
+        <FullCalendar :events="events" :options="options" ref="fc"/>
       </div>
     </div>
 
@@ -78,11 +78,13 @@ import '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
 import router from "@/router";
 
 export default {
   data() {
     return {
+      ww: screen.width,
       allService: null,
       utilService: null,
       currAnno: null,
@@ -93,35 +95,48 @@ export default {
       cntPrev2: null,
       totQta: null,
       options: {
-        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
         initialDate: new Date(),
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
+        initialView: 'dayGridMonth',
+        // initialView: 'dayGridWeek',
         eventClick: this.handleDateClick,
         editable: false,
         selectable: true,
         selectMirror: true,
         dayMaxEvents: true,
-        events: null
+        events: null,
+        handleWindowResize: true
       },
     }
   },
   created() {
     this.allService = new AllenamentiService();
     this.utilService = new UtilService();
+    window.addEventListener("resize", this.wResize);
   },
   mounted() {
     this.getAllenamenti();
     this.getSum();
+    this.calendarChangeView();
   },
   methods: {
+    wResize() {
+      this.calendarChangeView();
+    },
+    calendarChangeView() {
+      if (this.ww < 600) {
+        this.$refs.fc.getApi().changeView('dayGridWeek');
+      } else {
+        this.$refs.fc.getApi().changeView('dayGridMonth');
+      }
+    },
     handleDateClick: function (info) {
-      // console.log(info.event.id);
-      router.push({name: '/aggiungi', params: {id: info.event.id}})
-      // location.href = '/aggiungi/' + info.event.id;
+      router.push({name: 'aggiungi', params: {id: info.event.id}})
     },
     getAllenamenti() {
       this.allService.getAll().then(data => {

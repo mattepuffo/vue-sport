@@ -9,7 +9,7 @@
           <DataTable :value="allenamenti" responsiveLayout="stack" breakpoint="960px" sortField="data" :sortOrder="-1"
                      :paginator="true" :rows="20" :rowsPerPageOptions="[10,20,50]" :rowHover="true" filterDisplay="row"
                      v-model:filters="filters1" :globalFilterFields="['allenamento', 'data', 'finito', 'note']"
-                     :loading="loading1"
+                     :loading="loading1" showGridlines
                      paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
@@ -22,11 +22,11 @@
               </div>
             </template>
 
-            <!--
             <template #empty>
               Nessun allenamento
             </template>
 
+            <!--
             <template #loading>
               Loading...
             </template>
@@ -50,8 +50,10 @@
 
             <Column header="">
               <template #body="allProps">
-                <Button icon="pi pi-copy" class="p-button-rounded p-button-info mr-2"
-                        @click="copiaNote(allProps.data.note)"/>
+
+                <router-link :to="{ name: 'aggiungi', params: { id: allProps.data.id, dup: 'true' }}">
+                  <Button icon="pi pi-copy" class="p-button-rounded p-button-info mr-2"/>
+                </router-link>
 
                 <router-link :to="{ name: 'aggiungi', params: { id: allProps.data.id }}">
                   <Button icon="pi pi-pencil" class="p-button-rounded p-button-warning mr-2"/>
@@ -77,7 +79,7 @@
 <script>
 import AllenamentiService from "@/service/AllenamentiService";
 import {FilterMatchMode} from "primevue/api";
-import {copyText} from 'vue3-clipboard';
+// import {copyText} from 'vue3-clipboard';
 
 export default {
   data() {
@@ -98,14 +100,6 @@ export default {
     this.getAllenamenti();
   },
   methods: {
-    copiaNote(note) {
-      const strippedString = note.replace(/(<([^>]+)>)/gi, "");
-      copyText(strippedString, undefined, (error) => {
-        if (error) {
-          alert(error);
-        }
-      })
-    },
     getAllenamenti() {
       this.allService.getAll().then(data => {
         this.allenamenti = data;
@@ -151,7 +145,6 @@ export default {
   .p-paginator-current {
     margin-left: auto;
   }
-
 }
 
 ::v-deep(.p-progressbar) {
@@ -161,7 +154,6 @@ export default {
   .p-progressbar-value {
     background-color: #607D8B;
   }
-
 }
 
 ::v-deep(.p-datepicker) {
@@ -170,6 +162,5 @@ export default {
   td {
     font-weight: 400;
   }
-
 }
 </style>

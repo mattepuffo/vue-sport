@@ -21,6 +21,12 @@ export default class AllenamentiService {
             .then(d => d.allenamenti_tipi);
     }
 
+    getMesiAnno() {
+        return fetch(remotePath + 'allenamenti/get_mesi_anno.php')
+            .then(res => res.json())
+            .then(d => d);
+    }
+
     sumAnno() {
         return fetch(remotePath + 'allenamenti/count.php')
             .then(res => res.json())
@@ -69,13 +75,6 @@ export default class AllenamentiService {
         });
     }
 
-    // getMesiAnno() {
-    //     return axios.get(getMesiAnno/*, {responseType: 'text'}*/)
-    //         .then(res => {
-    //             return res.data;
-    //         });
-    // }
-    //
     // getTipi() {
     //     return axios.get(getTipi)
     //         .then(res => {

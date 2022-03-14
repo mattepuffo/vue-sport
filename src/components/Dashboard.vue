@@ -67,6 +67,13 @@
       </div>
     </div>
 
+    <div class="col-12">
+      <div class="card">
+        <h5>Statistiche</h5>
+        <Chart type="bar" :data="basicData"/>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -94,6 +101,10 @@ export default {
       cntPrev: null,
       cntPrev2: null,
       totQta: null,
+      basicData: {
+        labels: [],
+        datasets: [],
+      },
       options: {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
         initialDate: new Date(),
@@ -102,6 +113,7 @@ export default {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
+        firstDay: 1,
         initialView: 'dayGridMonth',
         // initialView: 'dayGridWeek',
         eventClick: this.handleDateClick,
@@ -123,6 +135,7 @@ export default {
     this.getAllenamenti();
     this.getSum();
     this.calendarChangeView();
+    this.getMesiAnno();
   },
   methods: {
     wResize() {
@@ -142,6 +155,12 @@ export default {
       this.allService.getAll().then(data => {
         this.options.events = data;
         this.totQta = data.length;
+      });
+    },
+    getMesiAnno() {
+      this.allService.getMesiAnno().then(data => {
+        this.basicData.datasets = data.datasets;
+        this.basicData.labels = data.labels;
       });
     },
     getSum() {

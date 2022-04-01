@@ -97,9 +97,9 @@ export default {
       currAnno: null,
       prevAnno: null,
       prevAnno2: null,
-      cntCurr: null,
-      cntPrev: null,
-      cntPrev2: null,
+      cntCurr: 0,
+      cntPrev: 0,
+      cntPrev2: 0,
       totQta: null,
       basicData: {
         labels: [],
@@ -175,7 +175,6 @@ export default {
         this.cntCurr = current[0].cnt;
         this.cntPrev = prev[0].cnt;
         this.cntPrev2 = prev2[0].cnt;
-
       });
     }
   }

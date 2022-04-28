@@ -21,7 +21,7 @@
 
         <div class="field">
           <label for="note">Note</label>
-          <Editor id="note" v-model="selectedNote" editorStyle="height: 320px"/>
+          <Editor id="note" v-model="selectedNote" editorStyle="height: 120px"/>
         </div>
       </div>
 

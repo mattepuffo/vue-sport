@@ -7,11 +7,11 @@
 
         <div>
           <DataTable :value="allenamenti" responsiveLayout="stack" breakpoint="960px" sortField="data" :sortOrder="-1"
-                     :paginator="true" :rows="20" :rowsPerPageOptions="[10,20,50]" :rowHover="true" filterDisplay="row"
-                     v-model:filters="filters1" :globalFilterFields="['allenamento', 'data', 'finito', 'note']"
-                     :loading="loading1" showGridlines
-                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+                     :paginator="true" :rows="20" :rowsPerPageOptions="[10, 20, 50]" :rowHover="true"
+                     filterDisplay="row" v-model:filters="filters1"
+                     :globalFilterFields="['allenamento', 'data', 'finito', 'note']"
+                     showGridlines currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown">
 
             <template #header>
               <div class="p-d-flex p-jc-end">

@@ -8,7 +8,7 @@
         <div>
           <DataTable :value="allenamenti" responsiveLayout="stack" breakpoint="960px" sortField="data" :sortOrder="-1"
                      :paginator="true" :rows="20" :rowsPerPageOptions="[10, 20, 50]" :rowHover="true"
-                     filterDisplay="row" v-model:filters="filters1"
+                     filterDisplay="row" v-model:filters="filters1" data-key="allenamento"
                      :globalFilterFields="['allenamento', 'data', 'finito', 'note']"
                      showGridlines currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                      paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown">
@@ -17,7 +17,7 @@
               <div class="p-d-flex p-jc-end">
                 <span class="p-input-icon-left ">
                     <i class="pi pi-search"/>
-                    <InputText v-model="filters1['global'].value" placeholder="Keyword Search"/>
+                    <InputText v-model="filters1['global'].value" placeholder="Cerca"/>
                 </span>
               </div>
             </template>

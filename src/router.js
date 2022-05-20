@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 import Dashboard from './components/Dashboard.vue';
 import Allenamenti from "@/components/Allenamenti";
 import AggiungiAllenamento from "@/components/AggiungiAllenamento";
+import Pesi from "@/components/Pesi";
 
 const routes = [
     {
@@ -18,7 +19,12 @@ const routes = [
         path: '/aggiungi/:id?/:dup?',
         name: 'aggiungi',
         component: AggiungiAllenamento,
-    }
+    },
+    {
+        path: '/pesi',
+        name: 'pesi',
+        component: Pesi,
+    },
 ];
 
 const router = createRouter({

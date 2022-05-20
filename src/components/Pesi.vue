@@ -21,16 +21,43 @@ export default {
       pesiService: null,
       pesi: null,
       basicData: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['2022-02-01', '2022-04-01', ' 2022-03-02', '2022-05-10', '2022-05-23'],
         datasets: [
           {
-            label: 'First Dataset',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            label: 'Andamento peso',
+            data: [68.05, 69.90, 69.50, 70.07, 69.40],
             fill: false,
-            borderColor: '#42A5F5',
+            borderColor: '#00b300',
             tension: .4
           }
         ]
+      },
+      basicOptions: {
+        plugins: {
+          legend: {
+            labels: {
+              color: '#495057'
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: '#495057'
+            },
+            grid: {
+              color: '#ebedef'
+            }
+          },
+          y: {
+            ticks: {
+              color: '#495057'
+            },
+            grid: {
+              color: '#ebedef'
+            }
+          }
+        }
       },
     }
   },

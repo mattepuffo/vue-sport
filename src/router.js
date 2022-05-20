@@ -3,6 +3,7 @@ import Dashboard from './components/Dashboard.vue';
 import Allenamenti from "@/components/Allenamenti";
 import AggiungiAllenamento from "@/components/AggiungiAllenamento";
 import Pesi from "@/components/Pesi";
+import AggiungiPeso from '@/components/AggiungiPeso';
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: '/pesi',
         name: 'pesi',
         component: Pesi,
+    },
+    {
+        path: '/aggiungi_peso/:id?/:dup?',
+        name: 'aggiungi_peso',
+        component: AggiungiPeso,
     },
 ];
 

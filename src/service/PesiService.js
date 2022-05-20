@@ -9,4 +9,18 @@ export default class PesiService {
             .then(d => d.pesi);
     }
 
+    add(data) {
+        return fetch(remotePath + 'pesi/add.php', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((res) => {
+            return res.json();
+        }, (error) => {
+            return error;
+        });
+    }
+
 }

@@ -3,7 +3,9 @@
   <div class="grid">
 
     <div class="col-12">
+
       <div class="card p-fluid">
+
         <h5>{{ title }}</h5>
 
         <div class="field">
@@ -57,7 +59,7 @@ export default {
     return {
       allId: null,
       dup: null,
-      title: "Aggiungi allenamento",
+      title: "Aggiungi / modifica allenamento",
       allenamenti: null,
       selctedAllenamento: null,
       selectedData: null,
@@ -94,7 +96,6 @@ export default {
 
     if (!voca.isEmpty(this.dup)) {
       this.allId = '';
-      console.log(this.allId);
     }
   },
   mounted() {

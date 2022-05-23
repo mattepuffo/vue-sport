@@ -1,4 +1,4 @@
-module.exports={
+module.exports = {
     remotePath: 'https://www.mattepuffo.com/api/sport/'
 }
 

@@ -21,6 +21,10 @@ export default {
       pesiService: null,
       pesi: null,
       basicData: {
+        labels: [],
+        datasets: [],
+      },
+      basicData2: {
         labels: ['2022-02-01', '2022-04-01', ' 2022-03-02', '2022-05-10', '2022-05-23'],
         datasets: [
           {
@@ -65,14 +69,15 @@ export default {
     this.pesiService = new PesiService();
   },
   mounted() {
-    this.getPesi();
+    this.getMesiAnno();
   },
   methods: {
-    getPesi() {
-      this.pesiService.getAll().then(data => {
-        this.pesi = data;
+    getMesiAnno() {
+      this.pesiService.getMesiAnno().then(data => {
+        this.basicData.datasets = data.datasets;
+        this.basicData.labels = data.labels;
       });
-    }
+    },
   }
 }
 </script>

@@ -9,6 +9,12 @@ export default class PesiService {
             .then(d => d.pesi);
     }
 
+    getMesiAnno() {
+        return fetch(remotePath + 'pesi/get_mesi_anno.php')
+            .then(res => res.json())
+            .then(d => d);
+    }
+
     add(data) {
         return fetch(remotePath + 'pesi/add.php', {
             method: 'post',

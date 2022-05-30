@@ -3,8 +3,9 @@
     <div class="col-12">
       <div class="card">
         <h5>{{ title }}</h5>
+        <Button icon="pi pi-download" class="p-button-rounded p-button-success" @click="downGrafico"/>
 
-        <Chart type="line" :data="basicData" :options="basicOptions"/>
+        <Chart id="chart_pesi" type="line" :data="basicData" :options="basicOptions"/>
 
       </div>
     </div>
@@ -23,18 +24,6 @@ export default {
       basicData: {
         labels: [],
         datasets: [],
-      },
-      basicData2: {
-        labels: ['2022-02-01', '2022-04-01', ' 2022-03-02', '2022-05-10', '2022-05-23'],
-        datasets: [
-          {
-            label: 'Andamento peso',
-            data: [68.05, 69.90, 69.50, 70.07, 69.40],
-            fill: false,
-            borderColor: '#00b300',
-            tension: .4
-          }
-        ]
       },
       basicOptions: {
         plugins: {
@@ -78,6 +67,15 @@ export default {
         this.basicData.labels = data.labels;
       });
     },
+    downGrafico() {
+      const chartAndamento = document.getElementById('chart_pesi');
+      const canvasElement = chartAndamento.childNodes[0];
+
+      const link = document.createElement('a');
+      link.download = 'download.png';
+      link.href = canvasElement.toDataURL();
+      link.click();
+    }
   }
 }
 </script>

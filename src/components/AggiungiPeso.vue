@@ -9,7 +9,11 @@
 
         <div class="field">
           <label for="peso">Peso</label>
-          <InputNumber id="peso" v-model="selectedPeso" mode="decimal" :minFractionDigits="2" :maxFractionDigits="2"/>
+          <!--<InputNumber id="peso" v-model="selectedPeso" mode="decimal" :minFractionDigits="2" :maxFractionDigits="2"/>-->
+
+          <InputNumber id="peso" v-model="selectedPeso" showButtons buttonLayout="horizontal" :step="0.1" :min="1"
+                       decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success"
+                       incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"/>
         </div>
 
         <div class="field">
@@ -44,10 +48,8 @@ export default {
   },
   data() {
     return {
-      allId: null,
-      dup: null,
       title: "Aggiungi / modifica peso",
-      selectedPeso: null,
+      selectedPeso: 70,
       selectedData: null,
       pesiService: null
     }
@@ -60,11 +62,6 @@ export default {
   },
   created() {
     this.pesiService = new PesiService();
-
-    this.allId = this.$route.params.id;
-    this.dup = this.$route.params.dup;
-
-    // if (!voca.isEmpty(this.allId)) {}
 
     if (!voca.isEmpty(this.dup)) {
       this.allId = '';
@@ -89,40 +86,18 @@ export default {
           'data': dd.getFullYear() + '-' + (dd.getMonth() + 1) + '-' + dd.getDate()
         };
 
-        if (voca.isEmpty(this.allId)) {
-
-          this.pesiService.add(data)
-              .then(res => {
-                if (res.res === 'ok') {
-                  location.href = '/sport/pesi';
-                } else {
-                  this.$toast.add({
-                    severity: 'error',
-                    summary: res.message,
-                    life: 3000
-                  });
-                }
-              });
-
-        } else {
-          data.id = this.allId;
-
-          // this.allService.upAllenamento(data)
-          //     .then(res => {
-          //       if (res.res === 'ok') {
-          //         location.href = '/sport/pesi';
-          //       } else {
-          //         this.$toast.add({
-          //           severity: 'error',
-          //           summary: res.message,
-          //           life: 3000
-          //         });
-          //       }
-          //     });
-
-        }
-
-        // console.log(data);
+        this.pesiService.add(data)
+            .then(res => {
+              if (res.res === 'ok') {
+                location.href = '/sport/pesi';
+              } else {
+                this.$toast.add({
+                  severity: 'error',
+                  summary: res.message,
+                  life: 3000
+                });
+              }
+            });
 
       }
     }

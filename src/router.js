@@ -27,7 +27,7 @@ const routes = [
         component: Pesi,
     },
     {
-        path: '/aggiungi_peso/:id?/:dup?',
+        path: '/aggiungi_peso',
         name: 'aggiungi_peso',
         component: AggiungiPeso,
     },

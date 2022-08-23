@@ -89,7 +89,7 @@ export default {
         this.pesiService.add(data)
             .then(res => {
               if (res.res === 'ok') {
-                location.href = '/sport/pesi';
+                location.href = '/sport/#/pesi';
               } else {
                 this.$toast.add({
                   severity: 'error',

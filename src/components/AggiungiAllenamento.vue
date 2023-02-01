@@ -18,42 +18,43 @@
         <div class="field">
           <label for="data">Data</label>
           <Calendar id="data" v-model="selectedData" :showButtonBar="true" :touchUI="true" :showIcon="true"
-                    dateFormat="dd/mm/yy"/>
+                    dateFormat="dd/mm/yy" />
         </div>
 
         <div class="field">
           <label for="note">Note</label>
-          <Editor id="note" v-model="selectedNote" editorStyle="height: 120px"/>
+          <Editor id="note" v-model="selectedNote" editorStyle="height: 120px"
+                  autocapitalize="none" />
         </div>
       </div>
 
       <div class="field">
         <label for="finito">Finito</label>
         <br>
-        <InputSwitch id="finito" v-model="selectedFinito"/>
+        <InputSwitch id="finito" v-model="selectedFinito" />
       </div>
 
       <div class="field">
-        <Button type="button" label="Salva" icon="pi pi-save" @click="submit()"/>
+        <Button type="button" label="Salva" icon="pi pi-save" @click="submit()" />
       </div>
 
     </div>
 
   </div>
 
-  <Toast position="top-center"/>
+  <Toast position="top-center" />
 
 </template>
 
 <script>
-import AllenamentiService from '../service/AllenamentiService';
-import useVuelidate from '@vuelidate/core';
-import {required} from '@vuelidate/validators';
-import voca from 'voca';
+import AllenamentiService from "../service/AllenamentiService";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import voca from "voca";
 
 export default {
   setup() {
-    return {v$: useVuelidate()}
+    return { v$: useVuelidate() };
   },
   data() {
     return {
@@ -66,14 +67,14 @@ export default {
       selectedNote: null,
       selectedFinito: true,
       allService: null
-    }
+    };
   },
   validations() {
     return {
-      selctedAllenamento: {required},
-      selectedData: {required},
-      selectedNote: {required}
-    }
+      selctedAllenamento: { required },
+      selectedData: { required },
+      selectedNote: { required }
+    };
   },
   created() {
     this.allService = new AllenamentiService();
@@ -95,7 +96,7 @@ export default {
     }
 
     if (!voca.isEmpty(this.dup)) {
-      this.allId = '';
+      this.allId = "";
     }
   },
   mounted() {
@@ -105,50 +106,50 @@ export default {
   },
   methods: {
     async submit() {
-      const result = await this.v$.$validate()
+      const result = await this.v$.$validate();
       if (!result) {
         this.$toast.add({
-          severity: 'error',
-          summary: 'Allenamento, data e note sono obbligatori!',
+          severity: "error",
+          summary: "Allenamento, data e note sono obbligatori!",
           life: 3000
         });
       } else {
         const dd = new Date(this.selectedData);
         let data = {
-          'allenamento': this.selctedAllenamento,
-          'data': dd.getFullYear() + '-' + (dd.getMonth() + 1) + '-' + dd.getDate(),
-          'note': this.selectedNote,
-          'finito': this.selectedFinito
+          "allenamento": this.selctedAllenamento,
+          "data": dd.getFullYear() + "-" + (dd.getMonth() + 1) + "-" + dd.getDate(),
+          "note": this.selectedNote,
+          "finito": this.selectedFinito
         };
 
         if (voca.isEmpty(this.allId)) {
           this.allService.addAllenamento(data)
-              .then(res => {
-                if (res.res === 'ok') {
-                  location.href = '/sport';
-                } else {
-                  this.$toast.add({
-                    severity: 'error',
-                    summary: res.message,
-                    life: 3000
-                  });
-                }
-              });
+            .then(res => {
+              if (res.res === "ok") {
+                location.href = "/sport";
+              } else {
+                this.$toast.add({
+                  severity: "error",
+                  summary: res.message,
+                  life: 3000
+                });
+              }
+            });
         } else {
           data.id = this.allId;
 
           this.allService.upAllenamento(data)
-              .then(res => {
-                if (res.res === 'ok') {
-                  location.href = '/sport';
-                } else {
-                  this.$toast.add({
-                    severity: 'error',
-                    summary: res.message,
-                    life: 3000
-                  });
-                }
-              });
+            .then(res => {
+              if (res.res === "ok") {
+                location.href = "/sport";
+              } else {
+                this.$toast.add({
+                  severity: "error",
+                  summary: res.message,
+                  life: 3000
+                });
+              }
+            });
         }
 
         // console.log(data);
@@ -156,5 +157,5 @@ export default {
       }
     }
   }
-}
+};
 </script>

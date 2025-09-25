@@ -4,6 +4,7 @@ import Allenamenti from "@/components/Allenamenti";
 import AggiungiAllenamento from "@/components/AggiungiAllenamento";
 import Pesi from "@/components/Pesi";
 import AggiungiPeso from '@/components/AggiungiPeso';
+import ListaTest from "@/components/ListaTest.vue";
 
 const routes = [
     {
@@ -20,6 +21,11 @@ const routes = [
         path: '/aggiungi/:id?/:dup?',
         name: 'aggiungi',
         component: AggiungiAllenamento,
+    },
+    {
+        path: '/lista_test',
+        name: 'lista_test',
+        component: ListaTest,
     },
     {
         path: '/pesi',

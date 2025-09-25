@@ -46,6 +46,9 @@ export default {
               label: 'Aggiungi', icon: 'pi pi-fw pi-plus', to: '/aggiungi'
             },
             {
+              label: 'Lista test', icon: 'pi pi-fw pi-list', to: '/lista_test'
+            },
+            {
               label: 'Grafico pesi', icon: 'pi pi-fw pi-chart-bar', to: '/pesi'
             },
             {

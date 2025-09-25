@@ -7,48 +7,20 @@
 
         <div>
           <DataTable :value="allenamenti"
-                     :globalFilterFields="['title', 'data', 'finito', 'note']"
-                     :sortOrder="-1"
                      :paginator="true"
                      :rows="20"
                      :rowsPerPageOptions="[10, 20, 50]"
                      :rowHover="true"
-                     v-model:filters="filters1"
-                     data-key="allenamento"
                      responsiveLayout="stack"
                      breakpoint="960px"
-                     sortField="data"
                      showGridlines currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                      paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown">
-
-            <template #header>
-              <div class="p-d-flex p-jc-end">
-                <span class="p-input-icon-left ">
-                    <i class="pi pi-search"/>
-                    <InputText v-model="filters1['global'].value" placeholder="Cerca"/>
-                </span>
-              </div>
-            </template>
 
             <template #empty>
               Nessun allenamento
             </template>
 
-            <!--
-            <template #loading>
-              Loading...
-            </template>
-            -->
-
-            <Column field="title" header="Allenamento" :sortable="true"></Column>
-
-            <Column field="data" header="Data" :sortable="true"></Column>
-
-            <Column field="finito" header="Finito" :sortable="true">
-              <template #body="allProps">
-                <span>{{ (allProps.data.finito == 1) ? 'SI' : 'NO' }}</span>
-              </template>
-            </Column>
+            <Column field="data" header="Data"></Column>
 
             <Column header="Note">
               <template #body="allProps">
@@ -92,7 +64,7 @@ import {FilterMatchMode} from "primevue/api";
 export default {
   data() {
     return {
-      title: "Allenamenti",
+      title: "Lista Test",
       allService: null,
       allenamenti: null,
       filters1: {
@@ -105,22 +77,14 @@ export default {
     this.allService = new AllenamentiService();
   },
   mounted() {
-    this.getAllenamenti();
+    this.getListaTest();
   },
   methods: {
-    getAllenamenti() {
-      this.allService.getAll().then(data => {
+    getListaTest() {
+      this.allService.getListaTest().then(data => {
         this.allenamenti = data;
         // this.loading1 = false;
       });
-    },
-    clearFilter1() {
-      this.initFilters1();
-    },
-    initFilters1() {
-      this.filters1 = {
-        'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-      }
     },
     del(id) {
       this.$confirm.require({

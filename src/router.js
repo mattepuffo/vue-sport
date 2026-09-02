@@ -5,6 +5,7 @@ import AggiungiAllenamento from "@/components/AggiungiAllenamento";
 import Pesi from "@/components/Pesi";
 import AggiungiPeso from '@/components/AggiungiPeso';
 import ListaTest from "@/components/ListaTest.vue";
+import Garmin from "@/components/Garmin.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
         path: '/aggiungi_peso',
         name: 'aggiungi_peso',
         component: AggiungiPeso,
+    },
+    {
+        path: '/garmin',
+        name: 'garmin',
+        component: Garmin,
     },
 ];
 

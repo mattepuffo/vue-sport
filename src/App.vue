@@ -54,6 +54,9 @@ export default {
             {
               label: 'Aggiungi peso', icon: 'pi pi-fw pi-plus', to: '/aggiungi_peso'
             },
+            {
+              label: 'Garmin', icon: 'pi pi-fw pi-calendar', to: '/garmin'
+            },
           ]
         }
       ]

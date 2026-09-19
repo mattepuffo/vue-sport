@@ -14,14 +14,16 @@
                    breakpoint="960px"
                    showGridlines
                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                   paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown">
+                   paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                   :rowClass="getRowClass">
+
           <template #empty>
             Nessun allenamento
           </template>
 
           <Column field="data_allenamento" header="Data allenamento"></Column>
           <Column field="steps" header="Steps"></Column>
-          <Column field="distance_km" header="Distanza (KM)"></Column>
+          <Column field="distance_tot" header="Distanza (KM)"></Column>
 
           <Column header="" style="width: 5rem">
             <template #body="{ data }">
@@ -47,30 +49,35 @@
 
       <!-- ===== INFO PRINCIPALI ===== -->
       <div class="grid mb-4">
+
         <div class="col-12 md:col-6">
           <div class="info-box">
             <span class="label">ID</span>
             <span class="value">{{ selectedItem.id }}</span>
           </div>
         </div>
+
         <div class="col-12 md:col-6">
           <div class="info-box">
             <span class="label">Data Import</span>
             <span class="value">{{ selectedItem.data_import }}</span>
           </div>
         </div>
+
         <div class="col-12 md:col-6">
           <div class="info-box">
             <span class="label">Steps</span>
             <span class="value highlight">{{ selectedItem.steps?.toLocaleString() || '-' }}</span>
           </div>
         </div>
+
         <div class="col-12 md:col-6">
           <div class="info-box">
             <span class="label">Distanza totale</span>
-            <span class="value highlight">{{ formatKm(selectedItem.distance_km) }}</span>
+            <span class="value highlight">{{ formatKm(selectedItem.distance_tot) }}</span>
           </div>
         </div>
+
       </div>
 
       <!-- ===== ATTIVITÀ ===== -->
@@ -85,30 +92,37 @@
           </div>
 
           <div class="grid mt-2">
+
             <div class="col-6 md:col-3">
               <small class="text-500">Durata</small>
               <div>{{ formatDuration(act.duration_sec) }}</div>
             </div>
+
             <div class="col-6 md:col-3">
               <small class="text-500">Distanza</small>
               <div>{{ formatKm(act.distance_km) }}</div>
             </div>
+
             <div class="col-6 md:col-3">
               <small class="text-500">Calorie</small>
               <div>{{ act.calories || '-' }} kcal</div>
             </div>
+
             <div class="col-6 md:col-3">
               <small class="text-500">Freq. media</small>
               <div>{{ act.avg_hr || '-' }} bpm</div>
             </div>
+
             <div class="col-12 md:col-6">
               <small class="text-500">Inizio</small>
               <div>{{ act.start_time || '-' }}</div>
             </div>
+
             <div class="col-12 md:col-6">
               <small class="text-500">Activity ID</small>
               <div class="text-sm">{{ act.activity_id || '-' }}</div>
             </div>
+
           </div>
         </div>
       </div>
@@ -117,7 +131,6 @@
         Nessuna attività registrata
       </div>
 
-      <!-- ===== JSON GREZZO (opzionale, collassabile) ===== -->
       <Panel header="JSON completo" :toggleable="true" :collapsed="true" class="mt-4">
         <pre class="json-raw">{{ JSON.stringify(selectedItem, null, 2) }}</pre>
       </Panel>
@@ -158,17 +171,38 @@ export default {
       this.allService.getAll().then(data => {
         this.allenamenti = data.map(item => {
           let parsed = {};
+          let hasRunning = false;
+
           try {
             parsed = JSON.parse(item.dati);
+            const activities = parsed.activities;
+
+            if (activities && activities.length > 0) {
+              hasRunning = activities.some(activity =>
+                  activity.type?.toLowerCase().includes("running")
+              );
+            }
           } catch (e) {
             console.warn("Errore parsing dati per id", item.id, e);
+          }
+
+          // Calcolo distance_tot
+          let distance_tot = null;
+          const wellness = parsed.distance_wellness ?? 0;
+          const km = parsed.distance_km ?? 0;
+
+          if (hasRunning) {
+            distance_tot = wellness + km;
+          } else {
+            distance_tot = parsed.distance_wellness ?? null;
           }
 
           return {
             ...item,
             steps: parsed.steps ?? null,
-            distance_km: parsed.distance_km ?? null,
-            datiParsed: parsed
+            distance_tot,
+            datiParsed: parsed,
+            hasRunning
           };
         });
       });
@@ -192,6 +226,9 @@ export default {
     formatType(type) {
       if (!type) return 'Sconosciuto';
       return type.replaceAll('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    },
+    getRowClass(data) {
+      return data.hasRunning ? 'bg-blue-50 text-blue-700' : '';
     }
   }
 }
